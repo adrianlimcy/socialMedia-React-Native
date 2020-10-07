@@ -16,20 +16,25 @@
     "apollo-client": "2.6.4",
     "apollo-link-context": "1.0.18",
     "apollo-link-http": "1.5.15",
-    "expo": "33.0.0",
+    "expo": "^39.0.0",
     "graphql": "14.4.2",
     "graphql-tag": "2.10.1",
-    "react": "16.8.3",
-    "react-dom": "16.8.6",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
-    "react-native-web": "0.11.4",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.0.tar.gz",
+    "react-native-web": "~0.13.7",
     "react-navigation": "4.0.10",
     "react-navigation-stack": "1.9.4",
     "react-navigation-tabs": "2.5.5",
-    "styled-components": "4.4.0"
+    "styled-components": "4.4.0",
+    "react-native-gesture-handler": "~1.7.0",
+    "react-native-reanimated": "~1.13.0",
+    "react-native-screens": "~2.10.1",
+    "react-native-safe-area-context": "3.1.4",
+    "@react-native-community/masked-view": "0.1.10"
   },
   "devDependencies": {
-    "babel-preset-expo": "5.1.1"
+    "babel-preset-expo": "^8.3.0"
   },
   "private": true
 }
