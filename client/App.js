@@ -7,7 +7,7 @@ import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from '@apollo/react-hooks';
 import AppContainer from './AppContainer';
 
-const API_URL = 'http://172.19.140.117:4000/graphql';
+const API_URL = 'http://172.19.140.40:4000/graphql';
 
 const httpLink = new HttpLink({
   uri: API_URL,
