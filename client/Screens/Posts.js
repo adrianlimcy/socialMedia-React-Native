@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, FlatList, Text, View } from 'react-native';
+import { Button, FlatList, Text, View, ScrollView, RefreshControl } from 'react-native';
 import styled from 'styled-components/native';
 import { GET_POSTS } from '../constants';
 import PostItem from '../Components/Post/PostItem';
@@ -22,20 +22,37 @@ const PostsText = styled(Text)`
 `;
 
 const Posts = ({ navigation }) => {
-  const { loading, data } = useQuery(GET_POSTS);
+  const { loading, data, refetch } = useQuery(GET_POSTS, {pollInterval: 0});
+  const [refreshing, setRefreshing] = React.useState(false)
+
+  const handleRefresh = (refetch) => {
+    setRefreshing(true)
+    refetch().then(()=>setRefreshing(false))
+  }
 
   return (
     <PostsWrapper>
-      {loading ? (
+      {loading && !refreshing ? (
         <PostsText>{loading ? 'Loading...' : 'Empty'}</PostsText>
       ) : (
-        <PostsList
+        <ScrollView
+          style={{width: '100%'}}
+          refreshControl={
+            <RefreshControl 
+              refreshing={refreshing}
+              onRefresh={()=>handleRefresh(refetch)}
+            
+            />
+          }        
+        >
+          <PostsList
           data={data.posts}
           keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
             <PostItem item={item} navigation={navigation} />
           )}
         />
+        </ScrollView>
       )}
     </PostsWrapper>
   );

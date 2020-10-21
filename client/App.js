@@ -5,6 +5,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { setContext } from 'apollo-link-context';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from '@apollo/react-hooks';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import AppContainer from './AppContainer';
 
 const API_URL = 'http://172.19.140.40:4000/graphql';
@@ -33,7 +34,9 @@ const client = new ApolloClient({
 
 const App = () => (
   <ApolloProvider client={client}>
-    <AppContainer />
+    <ActionSheetProvider>
+      <AppContainer />
+    </ActionSheetProvider>
   </ApolloProvider>
 );
 
