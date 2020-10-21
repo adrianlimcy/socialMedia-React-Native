@@ -7,6 +7,9 @@ import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import AppContainer from './AppContainer';
+import {GET_NOTIFICATIONS, ADD_NOTIFICATIONS} from './constants'
+import {Notifications} from 'expo'
+import { NotificationTimeoutError } from 'expo-notifications';
 
 const API_URL = 'http://172.19.140.40:4000/graphql';
 
@@ -30,14 +33,63 @@ const cache = new InMemoryCache();
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache,
+  resolvers: {
+    Mutations: {
+      addNotification: async (_, { id, title, body }) => {
+        const {data} = await client.query({ query: GET_NOTIFICATIONS })
+
+        cache.writeData({
+          data: {
+            notifications: [
+              ...data.notifications,
+              {id, title, body, _typename: 'notifications' }
+            ]
+          }
+        })
+      }
+    }
+  },
+  typeDefs:`
+  type Notification {
+    id: Number!
+    title: String!
+    body: String!
+  }
+  extend type Query {
+    notifications: [Notification]!
+  }
+  `
 });
 
-const App = () => (
-  <ApolloProvider client={client}>
-    <ActionSheetProvider>
-      <AppContainer />
-    </ActionSheetProvider>
-  </ApolloProvider>
-);
+cache.writeData({
+  data: {
+    notifications: []
+  }
+})
+
+const App = () => {
+  React.useEffect(()=> {
+    Notifications.addListener(handleNotification)
+  })
+
+  const handleNotification = ({data}) => {
+    client.mutate({
+      mutation: ADD_NOTIFICATIONS,
+      variables: {
+        id: Math.floor(Math.random() *500) +1,
+        title: data.title,
+        body: data.body
+      }
+    })
+  }
+
+  return (
+    <ApolloProvider client={client}>
+      <ActionSheetProvider>
+        <AppContainer />
+      </ActionSheetProvider>
+    </ApolloProvider>
+  )
+}
 
 export default App;

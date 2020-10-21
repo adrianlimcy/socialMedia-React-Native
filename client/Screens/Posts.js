@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button, FlatList, Text, View, ScrollView, RefreshControl } from 'react-native';
 import styled from 'styled-components/native';
-import { GET_POSTS } from '../constants';
+import { GET_POSTS, STORE_EXPO_TOKEN } from '../constants';
 import PostItem from '../Components/Post/PostItem';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import registerForPushNotificationsAsync from '../utils/registerForPushNotificationsAsync';
 
 const PostsWrapper = styled(View)`
   flex: 1;
@@ -22,13 +23,20 @@ const PostsText = styled(Text)`
 `;
 
 const Posts = ({ navigation }) => {
-  const { loading, data, refetch } = useQuery(GET_POSTS, {pollInterval: 0});
+  const { loading, data, refetch } = useQuery(GET_POSTS, {pollInterval: 2000});
+  const [storeExpoToken] = useMutation(STORE_EXPO_TOKEN)
   const [refreshing, setRefreshing] = React.useState(false)
 
   const handleRefresh = (refetch) => {
     setRefreshing(true)
     refetch().then(()=>setRefreshing(false))
   }
+
+  React.useEffect(()=>{
+    registerForPushNotificationsAsync().then(expoToken=> {
+      return storeExpoToken({ variables: {expoToken }})
+    })
+  })
 
   return (
     <PostsWrapper>

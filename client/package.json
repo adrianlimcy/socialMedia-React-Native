@@ -34,7 +34,8 @@
     "react-navigation": "4.0.10",
     "react-navigation-stack": "1.9.4",
     "react-navigation-tabs": "2.5.5",
-    "styled-components": "4.4.0"
+    "styled-components": "4.4.0",
+    "expo-notifications": "~0.7.2"
   },
   "devDependencies": {
     "babel-preset-expo": "^8.3.0"

@@ -46,3 +46,27 @@ export const ADD_POST = gql`
     }
   }
 `
+
+export const GET_NOTIFICATIONS = gql`
+  query getNotifications {
+    notifications {
+      id @client
+      title @client
+      body @client
+    }
+  }
+`
+
+export const ADD_NOTIFICATIONS = gql`
+  mutation {
+    addNotification(id: $id, title: $title, body: $body) @client
+  }
+`
+
+export const STORE_EXPO_TOKEN = gql`
+  mutation storeExpoToken($expoToken: String!) {
+    storeExpoToken(expoToken: $expoToken) {
+      expoToken
+    }
+  }
+`

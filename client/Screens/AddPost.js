@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, Platform, TouchableOpacity, Text, View } from 'react-native';
+import { Dimensions, Image, Platform, TouchableOpacity, Text, View } from 'react-native';
 import styled from 'styled-components/native';
 import * as ImagePicker from 'expo-image-picker'
 import * as Permissions from 'expo-permissions'
@@ -74,7 +74,7 @@ const AddPost = ({ navigation, showActionSheetWithOptions }) => {
       const {status: statusCamera } = await Permissions.askAsync(Permissions.CAMERA)
       const {status: statusCameraRoll } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
 
-      if (statusCamera != 'granted' || statusCameraRoll !='granted') {
+      if (statusCamera !== 'granted' || statusCameraRoll !=='granted') {
         alert("Sorry, you need camera roll permissions! Go to 'Settings > Expo' to enable these.")
       } else {
         openActionSheet()
@@ -96,7 +96,7 @@ const AddPost = ({ navigation, showActionSheetWithOptions }) => {
         )}
       </UploadImage>
 
-      {imageURL && (
+      {imageUrl && (
         <Button
         onPress={()=>{
           addPost({ variables: {image: imageUrl} })
