@@ -10,6 +10,8 @@ import Settings from './Screens/Settings';
 import Login from './Screens/Login';
 import AuthLoading from './Screens/AuthLoading';
 
+import AddPost from './Screens/AddPost'
+
 const PostsStack = createStackNavigator({
   Posts: {
     screen: Posts,
@@ -54,8 +56,10 @@ const SwitchNavigator = createSwitchNavigator(
     Main: TabNavigator,
     Login,
     AuthLoading,
+    AddPost
   },
   {
+    mode: 'modal',
     initialRouteName: 'AuthLoading',
   },
 );

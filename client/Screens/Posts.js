@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { Button, FlatList, Text, View } from 'react-native';
 import styled from 'styled-components/native';
 import { GET_POSTS } from '../constants';
 import PostItem from '../Components/Post/PostItem';
@@ -40,5 +40,11 @@ const Posts = ({ navigation }) => {
     </PostsWrapper>
   );
 };
+
+Posts.navigationOptions = ({navigation}) => ({
+  headerRight: (
+    <Button onPress={() => navigation.navigate('AddPost')} title='Add Post' />
+  )
+})
 
 export default Posts;
