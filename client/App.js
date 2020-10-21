@@ -8,8 +8,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 import AppContainer from './AppContainer';
 import {GET_NOTIFICATIONS, ADD_NOTIFICATIONS} from './constants'
-import {Notifications} from 'expo'
-import { NotificationTimeoutError } from 'expo-notifications';
+import * as Notifications from 'expo-notifications'
 
 const API_URL = 'http://172.19.140.40:4000/graphql';
 
@@ -42,7 +41,7 @@ const client = new ApolloClient({
           data: {
             notifications: [
               ...data.notifications,
-              {id, title, body, _typename: 'notifications' }
+              {id, title, body, __typename: 'notifications' }
             ]
           }
         })
@@ -69,7 +68,7 @@ cache.writeData({
 
 const App = () => {
   React.useEffect(()=> {
-    Notifications.addListener(handleNotification)
+    Notifications.addNotificationReceivedListener(handleNotification);
   })
 
   const handleNotification = ({data}) => {

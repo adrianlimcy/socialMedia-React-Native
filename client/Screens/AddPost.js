@@ -70,7 +70,7 @@ const AddPost = ({ navigation, showActionSheetWithOptions }) => {
   }
 
   const getPermissionAsync = async () => {
-    if (Platform.OS === 'ois') {
+    // if (Platform.OS === 'ios') {
       const {status: statusCamera } = await Permissions.askAsync(Permissions.CAMERA)
       const {status: statusCameraRoll } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
 
@@ -79,7 +79,7 @@ const AddPost = ({ navigation, showActionSheetWithOptions }) => {
       } else {
         openActionSheet()
       }
-    }
+    // }
   }
 
   return (
